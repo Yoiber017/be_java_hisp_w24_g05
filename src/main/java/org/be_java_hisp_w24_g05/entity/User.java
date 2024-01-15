@@ -19,4 +19,6 @@ public class User {
 
     private List<User> followed;
 
+    private List<Post> posts;
+
 }

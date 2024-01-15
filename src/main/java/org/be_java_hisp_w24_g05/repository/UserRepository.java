@@ -31,7 +31,7 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public Optional<User> findById(Integer id) {
-        return Optional.empty();
+        return users.stream().filter(user -> user.getUserId().equals(id)).findFirst();
     }
 
     @Override
