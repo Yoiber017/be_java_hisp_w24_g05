@@ -17,6 +17,31 @@ public class UserRepository implements IUserRepository{
 
     public UserRepository() {
         this.users = new ArrayList<>();
+        User usuario1 = new User(1, "aser 1", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
+        User usuario6 =new User(6, "bser 6", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
+        User usuario2 =new User(2, "dser 2", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
+        User usuario3 =new User(3, "cser 3", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
+        User usuario4 =new User(4, "aser 4", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
+        User usuario5 =new User(5, "fser 5", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
+        User usuario7 =new User(7, "gser 7", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
+        User usuario8 =new User(8, "hser 8", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
+        usuario1.getFollowers().add(usuario2);
+        usuario1.getFollowers().add(usuario3);
+        usuario1.getFollowers().add(usuario4);
+        usuario2.getFollowers().add(usuario5);
+        usuario2.getFollowers().add(usuario6);
+        usuario3.getFollowers().add(usuario7);
+        usuario3.getFollowers().add(usuario8);
+        this.users.add(usuario1);
+        this.users.add(usuario2);
+        this.users.add(usuario3);
+        this.users.add(usuario4);
+        this.users.add(usuario5);
+        this.users.add(usuario6);
+        this.users.add(usuario7);
+        this.users.add(usuario8);
+
+
     }
     @Override
     public User save(User user) {
@@ -35,9 +60,8 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public Optional<User> findById(Integer id) {
-        return Optional.empty();
+        return users.stream().filter(user -> user.getUserId().equals(id)).findFirst();
     }
-
     @Override
     public ArrayList<User> findAll() {
         return null;
