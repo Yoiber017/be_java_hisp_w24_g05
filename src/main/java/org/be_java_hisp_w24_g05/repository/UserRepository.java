@@ -1,13 +1,19 @@
 package org.be_java_hisp_w24_g05.repository;
 
 import org.be_java_hisp_w24_g05.entity.Post;
+import org.be_java_hisp_w24_g05.entity.Product;
+import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.BadRequestException;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.List;
 
 @Repository
@@ -17,30 +23,6 @@ public class UserRepository implements IUserRepository{
 
     public UserRepository() {
         this.users = new ArrayList<>();
-        User usuario1 = new User(1, "aser 1", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
-        User usuario6 =new User(6, "bser 6", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
-        User usuario2 =new User(2, "dser 2", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
-        User usuario3 =new User(3, "cser 3", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
-        User usuario4 =new User(4, "aser 4", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
-        User usuario5 =new User(5, "fser 5", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
-        User usuario7 =new User(7, "gser 7", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
-        User usuario8 =new User(8, "hser 8", new ArrayList<>(), new ArrayList<>(),new  ArrayList<>());
-        usuario1.getFollowers().add(usuario2);
-        usuario1.getFollowers().add(usuario3);
-        usuario1.getFollowers().add(usuario4);
-        usuario2.getFollowers().add(usuario5);
-        usuario2.getFollowers().add(usuario6);
-        usuario3.getFollowers().add(usuario7);
-        usuario3.getFollowers().add(usuario8);
-        this.users.add(usuario1);
-        this.users.add(usuario2);
-        this.users.add(usuario3);
-        this.users.add(usuario4);
-        this.users.add(usuario5);
-        this.users.add(usuario6);
-        this.users.add(usuario7);
-        this.users.add(usuario8);
-
 
     }
     @Override
@@ -65,6 +47,25 @@ public class UserRepository implements IUserRepository{
     @Override
     public ArrayList<User> findAll() {
         return null;
+    }
+
+    // Posts of followed users by user id from last 2 weeks sorted by date
+    public List<Post> recentPostsOfFollowedUsers(int userId, String order) {
+
+        List<Post> lisPosts = users.stream().filter(user -> user.getUserId() == userId)
+                .findFirst().get().getFollowed().stream()
+                .flatMap(user -> user.getPosts().stream())
+                .filter(post -> post.getDate().isAfter(LocalDate.now().minusDays(14)))
+                .sorted(Comparator.comparing(Post::getDate))
+                .toList();
+
+        if (order.equals("date_desc")){
+            return lisPosts.stream().sorted(Comparator.comparing(Post::getDate).reversed()).toList();
+        }
+        else {
+            return lisPosts;
+        }
+
     }
 
     @Override

@@ -11,9 +11,12 @@ import org.be_java_hisp_w24_g05.dto.UserFollowedDTO;
 import org.be_java_hisp_w24_g05.dto.UserFollowersDto;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.NotFoundException;
+import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 import java.time.LocalDate;
@@ -28,6 +31,11 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
+
+
+    public List<Post> recentPostsOfFollowedUsers(int userId, String order){
+        return userRepository.recentPostsOfFollowedUsers(userId, order);
+    }
     @Override
     public User makePost(PostDto p) {
         ProductDto pDto = p.product();

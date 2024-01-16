@@ -1,12 +1,18 @@
 package org.be_java_hisp_w24_g05.repository;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Getter
+@AllArgsConstructor
 public class PostRepository implements IPostRepository {
 
     private ArrayList<Post> posts;
@@ -39,4 +45,5 @@ public class PostRepository implements IPostRepository {
     public ArrayList<Post> findAll() {
         return null;
     }
+
 }

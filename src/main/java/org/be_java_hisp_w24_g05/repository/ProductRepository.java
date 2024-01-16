@@ -38,4 +38,6 @@ public class ProductRepository implements IProductRepository {
     public ArrayList<Product> findAll() {
         return null;
     }
+
+    // Recent posts of followed users
 }
