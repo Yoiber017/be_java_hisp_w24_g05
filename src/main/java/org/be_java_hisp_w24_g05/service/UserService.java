@@ -25,9 +25,9 @@ public class UserService implements IUserService {
         List<User> users= userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found")
         ).getFollowers();
         if(order.equals("name_asc")){
-            users.sort(Comparator.comparing(User::getUserName).reversed());
-        }else if(order.equals("name_desc")){
             users.sort(Comparator.comparing(User::getUserName));
+        }else if(order.equals("name_desc")){
+            users.sort(Comparator.comparing(User::getUserName).reversed());
         }
         return Collections.singletonList(convertUserFollowersToDto(user, users.stream()
                 .map(this::convertUserToDto)
