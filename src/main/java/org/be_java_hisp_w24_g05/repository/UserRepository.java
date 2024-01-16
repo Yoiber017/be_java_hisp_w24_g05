@@ -13,17 +13,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.List;
+
 
 @Repository
 public class UserRepository implements IUserRepository{
 
     private ArrayList<User> users;
-
     public UserRepository() {
         this.users = new ArrayList<>();
-
     }
     @Override
     public User save(User user) {
