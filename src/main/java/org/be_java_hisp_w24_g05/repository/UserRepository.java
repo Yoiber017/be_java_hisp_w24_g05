@@ -1,12 +1,19 @@
 package org.be_java_hisp_w24_g05.repository;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.Product;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.BadRequestException;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -20,7 +27,7 @@ public class UserRepository implements IUserRepository{
 
     private ArrayList<User> users;
     public UserRepository() {
-        this.users = new ArrayList<>();
+        users = loadData();
     }
     @Override
     public User save(User user) {
@@ -107,5 +114,22 @@ public class UserRepository implements IUserRepository{
             }
         }
         throw new BadRequestException("User not found");
+    }
+
+    private ArrayList<User> loadData() {
+        ArrayList<User> data = new ArrayList<>();
+        File file;
+        ObjectMapper objectMapper = new ObjectMapper()
+                .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+                .registerModule(new JavaTimeModule());
+
+        TypeReference<ArrayList<User>> typeRef = new TypeReference<>() {};
+        try {
+            file = ResourceUtils.getFile("classpath:json/user.json");
+            data = objectMapper.readValue(file, typeRef);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 }
