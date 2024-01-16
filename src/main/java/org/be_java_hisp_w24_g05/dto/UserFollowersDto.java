@@ -5,5 +5,8 @@ import org.be_java_hisp_w24_g05.entity.User;
 
 import java.util.List;
 
-public record UserFollowersDto(@JsonProperty("user_id")Integer userId, @JsonProperty("user_name") String userName, List<UserDto> followers) {
+public record UserFollowersDto(
+        @JsonProperty("user_id")Integer userId,
+        @JsonProperty("user_name") String userName,
+        List<UserDto> followers) {
 }

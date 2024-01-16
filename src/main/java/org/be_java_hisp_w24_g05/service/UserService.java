@@ -1,13 +1,12 @@
 package org.be_java_hisp_w24_g05.service;
 
+import org.be_java_hisp_w24_g05.dto.CountFollowersDto;
+import org.be_java_hisp_w24_g05.entity.User;
+import org.be_java_hisp_w24_g05.exception.NotFoundException;
 
 import org.be_java_hisp_w24_g05.dto.*;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.Product;
-import org.be_java_hisp_w24_g05.entity.User;
-import org.be_java_hisp_w24_g05.entity.User;
-import org.be_java_hisp_w24_g05.exception.NotFoundException;
-import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import java.util.stream.Collectors;
 
@@ -28,6 +26,12 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
+
+    @Override
+    public CountFollowersDto searchUserFollowers(Integer userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
+        return userToCountFollowersDTO(user);
+    }
 
 
     public List<Post> recentPostsOfFollowedUsers(int userId, String order){
@@ -44,26 +48,15 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserFollowedDTO followUser(int userId, int userIdToFollow) {
+    public UserFollowedDto followUser(int userId, int userIdToFollow) {
         User user = this.userRepository.addFollower(userId, userIdToFollow);
-
-        return new UserFollowedDTO(
-                user.getUserId(),
-                user.getUserName(),
-                user.getFollowed().size()
-        );
+        return userToUserFollowedDTO(user);
     }
 
     @Override
-    public UserFollowedDTO unfollowUser(int userId, int userIdToUnfollow) {
-
+    public UserFollowedDto unfollowUser(int userId, int userIdToUnfollow) {
         User user = this.userRepository.removeFollower(userId, userIdToUnfollow);
-
-        return new UserFollowedDTO(
-                user.getUserId(),
-                user.getUserName(),
-                user.getFollowed().size()
-        );
+        return userToUserFollowedDTO(user);
     }
     @Override
     public List<UserFollowersDto> searchUserFollowers(Integer userId, String order) {
@@ -103,19 +96,37 @@ public class UserService implements IUserService {
                 u.getUserName()
         );
     }
+
     private UserFollowersDto convertUserFollowersToDto(User u,List<UserDto> users){
         return new UserFollowersDto(
                 u.getUserId(),
-                u.getUserName(),users
+                u.getUserName(),
+                users
         );
     }
 
     private UserFollowedByDto convertUserFollowedToDto(User u,List<UserDto> users){
         return new UserFollowedByDto(
                 u.getUserId(),
-                u.getUserName(),users
+                u.getUserName(),
+                users
         );
     }
 
+    private UserFollowedDto userToUserFollowedDTO(User user) {
+        return new UserFollowedDto(
+                user.getUserId(),
+                user.getUserName(),
+                user.getFollowed().size()
+        );
+    }
+
+    private CountFollowersDto userToCountFollowersDTO(User user) {
+        return new CountFollowersDto(
+                user.getUserId(),
+                user.getUserName(),
+                user.getFollowers().size()
+        );
+    }
 
 }

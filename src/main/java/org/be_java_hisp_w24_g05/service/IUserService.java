@@ -10,11 +10,11 @@ import java.util.List;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.dto.UserFollowersDto;
 
-import java.util.List;
+import org.be_java_hisp_w24_g05.dto.CountFollowersDto;
 
 public interface IUserService {
 
-    public List<UserFollowersDto> searchUserFollowers(Integer userId, String order);
+    List<UserFollowersDto> searchUserFollowers(Integer userId, String order);
 
     List<UserFollowedByDto> getSellerFollowedByUser(Integer userId, String order);
 
@@ -22,7 +22,9 @@ public interface IUserService {
 
     User makePost(PostDto post);
 
-    UserFollowedDTO followUser(int userId, int userIdToFollow);
+    UserFollowedDto followUser(int userId, int userIdToFollow);
 
-    UserFollowedDTO unfollowUser(int userId, int userIdToUnfollow);
+    UserFollowedDto unfollowUser(int userId, int userIdToUnfollow);
+
+    CountFollowersDto searchUserFollowers(Integer userId);
 }
