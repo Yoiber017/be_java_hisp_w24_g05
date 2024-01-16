@@ -16,11 +16,22 @@ public class UserService implements IUserService {
     public UserFollowedDTO followUser(int userId, int userIdToFollow) {
         User user = this.userRepository.addFollower(userId, userIdToFollow);
 
-        UserFollowedDTO userFollowedDTO = new UserFollowedDTO(
+        return new UserFollowedDTO(
                 user.getUserId(),
                 user.getUserName(),
                 user.getFollowed().size()
         );
-        return userFollowedDTO;
+    }
+
+    @Override
+    public UserFollowedDTO unfollowUser(int userId, int userIdToUnfollow) {
+
+        User user = this.userRepository.removeFollower(userId, userIdToUnfollow);
+
+        return new UserFollowedDTO(
+                user.getUserId(),
+                user.getUserName(),
+                user.getFollowed().size()
+        );
     }
 }

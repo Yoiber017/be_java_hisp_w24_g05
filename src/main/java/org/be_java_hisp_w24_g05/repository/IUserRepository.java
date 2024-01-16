@@ -6,4 +6,6 @@ public interface IUserRepository extends ICrudRepository<User> {
 
     User addFollower(int userId, int userIdToFollow);
 
+    User removeFollower(int userId, int userIdToUnfollow);
+
 }

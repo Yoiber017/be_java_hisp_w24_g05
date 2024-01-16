@@ -14,12 +14,6 @@ public class UserRepository implements IUserRepository{
 
     public UserRepository() {
         this.users = new ArrayList<>();
-        this.users.add(new User(1, "User 1", new ArrayList<>(), new ArrayList<>()));
-        this.users.add(new User(2, "User 2", new ArrayList<>(), new ArrayList<>()));
-        this.users.add(new User(3, "User 3", new ArrayList<>(), new ArrayList<>()));
-        this.users.add(new User(4, "User 4", new ArrayList<>(), new ArrayList<>()));
-        this.users.add(new User(5, "User 5", new ArrayList<>(), new ArrayList<>()));
-        this.users.add(new User(6, "User 6", new ArrayList<>(), new ArrayList<>()));
     }
     @Override
     public User save(User user) {
@@ -58,6 +52,22 @@ public class UserRepository implements IUserRepository{
             return user;
         }
 
+        throw new BadRequestException("User not found");
+    }
+
+    @Override
+    public User removeFollower(int userId, int userIdToUnfollow) {
+
+        User user = this.users.stream().filter(u -> u.getUserId() == userId).findFirst().orElse(null);
+
+        if (user != null) {
+            User userToUnfollow = user.getFollowed().stream().filter(u -> u.getUserId() == userIdToUnfollow).findFirst().orElse(null);
+            if (userToUnfollow != null) {
+                user.getFollowed().remove(userToUnfollow);
+                userToUnfollow.getFollowers().remove(user);
+                return user;
+            }
+        }
         throw new BadRequestException("User not found");
     }
 }

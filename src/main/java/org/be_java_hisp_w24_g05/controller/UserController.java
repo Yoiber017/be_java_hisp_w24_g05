@@ -26,4 +26,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @GetMapping("/{userId}/unfollow/{userIdToUnfollow}")
+    public ResponseEntity<UserFollowedDTO> unfollowUser(@PathVariable int userId, @PathVariable int userIdToUnfollow){
+
+        UserFollowedDTO user = this.userService.unfollowUser(userId, userIdToUnfollow);
+
+        return ResponseEntity.ok(user);
+    }
+
 }
