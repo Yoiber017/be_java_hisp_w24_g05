@@ -1,6 +1,7 @@
 package org.be_java_hisp_w24_g05.service;
 
 import org.be_java_hisp_w24_g05.dto.UserDto;
+import org.be_java_hisp_w24_g05.dto.UserFollowedDTO;
 import org.be_java_hisp_w24_g05.dto.UserFollowersDto;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.NotFoundException;
@@ -20,6 +21,28 @@ public class UserService implements IUserService {
     private IUserRepository userRepository;
 
     @Override
+    public UserFollowedDTO followUser(int userId, int userIdToFollow) {
+        User user = this.userRepository.addFollower(userId, userIdToFollow);
+
+        return new UserFollowedDTO(
+                user.getUserId(),
+                user.getUserName(),
+                user.getFollowed().size()
+        );
+    }
+
+    @Override
+    public UserFollowedDTO unfollowUser(int userId, int userIdToUnfollow) {
+
+        User user = this.userRepository.removeFollower(userId, userIdToUnfollow);
+
+        return new UserFollowedDTO(
+                user.getUserId(),
+                user.getUserName(),
+                user.getFollowed().size()
+        );
+    }
+    @Override
     public List<UserFollowersDto> searchUserFollowers(Integer userId, String order) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
         List<User> users= userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found")
@@ -38,7 +61,7 @@ public class UserService implements IUserService {
         return new UserDto(
                 u.getUserId(),
                 u.getUserName()
-                );
+        );
     }
     private UserFollowersDto convertUserFollowersToDto(User u,List<UserDto> users){
         return new UserFollowersDto(
