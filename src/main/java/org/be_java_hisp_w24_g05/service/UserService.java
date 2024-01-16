@@ -5,6 +5,8 @@ import org.be_java_hisp_w24_g05.dto.ProductDto;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.Product;
 import org.be_java_hisp_w24_g05.entity.User;
+import org.be_java_hisp_w24_g05.dto.UserFollowedDTO;
+import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +27,28 @@ public class UserService implements IUserService {
         LocalDate date = LocalDate.parse(p.date(), formatter);
         Post post = new Post(0, p.userId(), date, product, p.category(), p.price());
         return userRepository.addPost(post);
+    }
+
+    @Override
+    public UserFollowedDTO followUser(int userId, int userIdToFollow) {
+        User user = this.userRepository.addFollower(userId, userIdToFollow);
+
+        return new UserFollowedDTO(
+                user.getUserId(),
+                user.getUserName(),
+                user.getFollowed().size()
+        );
+    }
+
+    @Override
+    public UserFollowedDTO unfollowUser(int userId, int userIdToUnfollow) {
+
+        User user = this.userRepository.removeFollower(userId, userIdToUnfollow);
+
+        return new UserFollowedDTO(
+                user.getUserId(),
+                user.getUserName(),
+                user.getFollowed().size()
+        );
     }
 }
