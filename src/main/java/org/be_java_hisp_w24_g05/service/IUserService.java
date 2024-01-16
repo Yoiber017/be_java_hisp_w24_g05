@@ -1,14 +1,30 @@
 package org.be_java_hisp_w24_g05.service;
 
 
-import org.be_java_hisp_w24_g05.dto.UserFollowedDTO;
+import org.be_java_hisp_w24_g05.dto.*;
+import org.be_java_hisp_w24_g05.entity.Post;
 
-import org.be_java_hisp_w24_g05.dto.CountFollowersDTO;
+import java.util.List;
+
+
+import org.be_java_hisp_w24_g05.entity.User;
+import org.be_java_hisp_w24_g05.dto.UserFollowersDto;
+
+import org.be_java_hisp_w24_g05.dto.CountFollowersDto;
 
 public interface IUserService {
-    UserFollowedDTO followUser(int userId, int userIdToFollow);
 
-    UserFollowedDTO unfollowUser(int userId, int userIdToUnfollow);
+    List<UserFollowersDto> searchUserFollowers(Integer userId, String order);
 
-    CountFollowersDTO searchUserFollowers(Integer userId);
+    List<UserFollowedByDto> getSellerFollowedByUser(Integer userId, String order);
+
+    List<Post> recentPostsOfFollowedUsers(int userId, String order);
+
+    User makePost(PostDto post);
+
+    UserFollowedDto followUser(int userId, int userIdToFollow);
+
+    UserFollowedDto unfollowUser(int userId, int userIdToUnfollow);
+
+    CountFollowersDto searchUserFollowers(Integer userId);
 }
