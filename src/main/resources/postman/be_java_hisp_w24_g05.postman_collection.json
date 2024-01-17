@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "US 0002",
+			"name": "Get count followers",
 			"event": [
 				{
 					"listen": "test",
@@ -45,180 +45,7 @@
 			"response": []
 		},
 		{
-			"name": "Usuario con mas de 2 posts",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": []
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"followRedirects": true,
-				"disableUrlEncoding": false,
-				"disableCookies": false
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "User-Agent",
-						"value": "insomnia/8.5.1"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/users/more-than-two-posts",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"more-than-two-posts"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Cantidad de post con promo de un usuario",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": []
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"followRedirects": true,
-				"disableUrlEncoding": false,
-				"disableCookies": false
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "User-Agent",
-						"value": "insomnia/8.5.1"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/products/promo-post/count/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products",
-						"promo-post",
-						"count",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Post with promo",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": []
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"followRedirects": true,
-				"disableUrlEncoding": false,
-				"disableCookies": false
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "User-Agent",
-						"value": "insomnia/8.5.1"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "\t{\n\t\t\"postId\": 9,\n\t\t\"userId\": 1,\n\t\t\"date\": \"2024-01-12\",\n\t\t\"product\": {\n\t\t\t\"productId\": 1,\n\t\t\t\"productName\": \"Laptop\",\n\t\t\t\"type\": \"Electronics\",\n\t\t\t\"brand\": \"BrandX\",\n\t\t\t\"color\": \"Silver\",\n\t\t\t\"note\": \"Note1\"\n\t\t},\n\t\t\"category\": 2,\n\t\t\"price\": 120.0,\n\t\t\"hasPromo\": true,\n\t\t\"discount\" : 15.0\n\t}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/products/promo-post",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products",
-						"promo-post"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Posts de un user con promo",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": []
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"followRedirects": true,
-				"disableUrlEncoding": false,
-				"disableCookies": false
-			},
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "User-Agent",
-						"value": "insomnia/8.5.1"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/products/promo-post/list/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"products",
-						"promo-post",
-						"list",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Post de followed",
+			"name": "Post followed",
 			"event": [
 				{
 					"listen": "test",
@@ -265,7 +92,7 @@
 			"response": []
 		},
 		{
-			"name": "Posts de followed desc",
+			"name": "Post followed desc",
 			"event": [
 				{
 					"listen": "test",
@@ -312,7 +139,7 @@
 			"response": []
 		},
 		{
-			"name": "FOLLOW",
+			"name": "Follow",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -333,7 +160,7 @@
 			"response": []
 		},
 		{
-			"name": "UNFOLLOW",
+			"name": "Unfollow",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -354,7 +181,15 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/users/1/followers/list?order=name_asc",
+			"name": "Get followers",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get followers asc",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -393,7 +228,15 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/products/post",
+			"name": "Get followers desc",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Post product OK",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
 					"content-type": true
@@ -427,7 +270,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/products/post",
+			"name": "Post product BadRequest",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {
 					"content-type": true
@@ -455,6 +298,70 @@
 					"path": [
 						"products",
 						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get followed",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Get followed asc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/2/followed/list?order=name_asc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"2",
+						"followed",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "name_asc"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get followed desc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/users/2/followed/list?order=name_desc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"2",
+						"followed",
+						"list"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "name_desc"
+						}
 					]
 				}
 			},
