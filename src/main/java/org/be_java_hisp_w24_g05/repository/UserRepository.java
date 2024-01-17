@@ -91,13 +91,16 @@ public class UserRepository implements IUserRepository{
         User user = this.users.stream().filter(u -> u.getUserId() == userId).findFirst().orElse(null);
         User userToFollow = this.users.stream().filter(u -> u.getUserId() == userIdToFollow).findFirst().orElse(null);
 
+        if(user.getFollowed().stream().filter(u -> u.getUserId() == userIdToFollow).findFirst().orElse(null) != null)
+            throw new BadRequestException("User with id " + userIdToFollow + " already followed");
+
         if (user != null && userToFollow != null) {
             user.getFollowed().add(userToFollow);
             userToFollow.getFollowers().add(user);
             return user;
         }
 
-        throw new BadRequestException("User not found");
+        throw new BadRequestException("User with id " + userId + " not found");
     }
 
     @Override
@@ -111,9 +114,11 @@ public class UserRepository implements IUserRepository{
                 user.getFollowed().remove(userToUnfollow);
                 userToUnfollow.getFollowers().remove(user);
                 return user;
+            }else{
+                throw new BadRequestException("User with id " + userIdToUnfollow + " not found in followed list");
             }
         }
-        throw new BadRequestException("User not found");
+        throw new BadRequestException("User with id " + userId + " not found");
     }
 
     private ArrayList<User> loadData() {
