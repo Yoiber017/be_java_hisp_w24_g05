@@ -7,7 +7,7 @@ public record UserFollowedDto(
         Integer userId,
         @JsonProperty("user_name")
         String userName,
-        @JsonProperty("quantity_of_followers")
+        @JsonProperty("quantity_of_followed")
         int quantityOfFollowed
         ){};
 

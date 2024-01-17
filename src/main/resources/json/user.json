@@ -20,21 +20,8 @@
         "price": 200.0
       }
     ],
-    "followed": [
-      {"user_id": 2, "user_name": "User2", "posts": [{
-        "post_id": 3,
-        "user_id": 2,
-        "date": "2024-01-15",
-        "product": {"product_id": 3, "product_name": "Camera", "brand": "BrandZ", "color": "Red", "note": "Note3"},
-        "category": 1,
-        "price": 150.0
-      }], "followed": [], "followers": []},
-      {"user_id": 3, "user_name": "User3", "posts": [], "followed": [], "followers": []}
-    ],
-    "followers": [
-      {"user_id": 2, "user_name": "User2", "posts": [], "followed": [], "followers": []},
-      {"user_id": 3, "user_name": "User3", "posts": [], "followed": [], "followers": []}
-    ]
+    "followed": [],
+    "followers": []
   },
   {
     "user_id": 2,
@@ -105,22 +92,7 @@
         "price": 250.0
       }
     ],
-    "followed": [
-      {
-        "user_id": 2,
-        "user_name": "User2",
-        "posts": [],
-        "followers": [],
-        "followed": []
-      },
-      {
-        "user_id": 3,
-        "user_name": "User3",
-        "posts": [],
-        "followers": [],
-        "followed": []
-      }
-    ],
+    "followed": [],
     "followers": []
   }
 ]
