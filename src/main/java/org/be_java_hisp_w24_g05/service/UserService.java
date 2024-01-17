@@ -45,15 +45,6 @@ public class UserService implements IUserService {
         }
     }
 
-    @Override
-    public User makePost(PostDto p) {
-        ProductDto pDto = p.product();
-        Product product = new Product(pDto.productId(), pDto.productName(), pDto.type(), pDto.brand(), pDto.color(), pDto.note());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date = LocalDate.parse(p.date(), formatter);
-        Post post = new Post(0, p.userId(), date, product, p.category(), p.price());
-        return userRepository.addPost(post);
-    }
 
     @Override
     public UserFollowedDto followUser(int userId, int userIdToFollow) {

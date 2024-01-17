@@ -20,7 +20,6 @@ public class ProductController {
 
     @Autowired
     private IProductService productService;
-
     @Autowired
     private IUserService userService;
 
@@ -31,6 +30,6 @@ public class ProductController {
 
     @PostMapping("/post")
     public ResponseEntity<?> makePost(@RequestBody PostDto p){
-        return new ResponseEntity<>(userService.makePost(p), HttpStatus.OK);
+        return new ResponseEntity<>(productService.makePost(p), HttpStatus.OK);
     }
 }
