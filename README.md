@@ -7,7 +7,7 @@ Implementación de una API REST en Java con Spring para gestionar datos según l
 La API se ejecuta localmente utilizando Spring Boot. Para las pruebas, se puede acceder a la colección de Postman alojada en la carpeta src -> main -> resources -> postman.
 
 ## Instrucciones de Ejecución:
-```bash
+
 ### Clonar el repositorio
 	 git clone https://github.com/Yoiber017/be_java_hisp_w24_g05.git
 
