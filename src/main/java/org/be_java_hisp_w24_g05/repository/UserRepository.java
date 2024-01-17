@@ -88,6 +88,9 @@ public class UserRepository implements IUserRepository{
     @Override
     public User addFollower(int userId, int userIdToFollow) {
 
+        if(userId == userIdToFollow)
+            throw new BadRequestException("User with id " + userId + " cannot follow himself");
+
         User user = this.users.stream().filter(u -> u.getUserId() == userId).findFirst().orElse(null);
         User userToFollow = this.users.stream().filter(u -> u.getUserId() == userIdToFollow).findFirst().orElse(null);
 
