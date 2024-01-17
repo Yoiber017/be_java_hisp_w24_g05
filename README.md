@@ -68,7 +68,7 @@ La API se ejecuta localmente utilizando Spring Boot. Para las pruebas, se puede 
 - @[Yoiber017](https://github.com/Yoiber017) - Yoiber Andres Beitar Renteria
 
 #### Scrum Master:
-- @[extjotabell](https://github.com/extjotabell) - Johanna Tabella
+- [@extjotabell](https://github.com/extjotabell) - Johanna Tabella
 
 ### Agradecimientos
 
