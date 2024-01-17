@@ -34,18 +34,17 @@ public class UserService implements IUserService {
     }
 
 
+    // Posts of followed users by user id from last 2 weeks sorted by date
+    //in case none found throw not found exception
     public List<Post> recentPostsOfFollowedUsers(int userId, String order){
-        return userRepository.recentPostsOfFollowedUsers(userId, order);
+        try {
+            return userRepository.recentPostsOfFollowedUsers(userId, order);
+        }
+        catch (Exception e) {
+            throw new NotFoundException("User not found");
+        }
     }
-    @Override
-    public User makePost(PostDto p) {
-        ProductDto pDto = p.product();
-        Product product = new Product(pDto.productId(), pDto.productName(), pDto.type(), pDto.brand(), pDto.color(), pDto.note());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate date = LocalDate.parse(p.date(), formatter);
-        Post post = new Post(0, p.userId(), date, product, p.category(), p.price());
-        return userRepository.addPost(post);
-    }
+
 
     @Override
     public UserFollowedDto followUser(int userId, int userIdToFollow) {

@@ -20,8 +20,6 @@ public interface IUserService {
 
     List<Post> recentPostsOfFollowedUsers(int userId, String order);
 
-    User makePost(PostDto post);
-
     UserFollowedDto followUser(int userId, int userIdToFollow);
 
     UserFollowedDto unfollowUser(int userId, int userIdToUnfollow);
