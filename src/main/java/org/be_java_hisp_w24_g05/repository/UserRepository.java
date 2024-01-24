@@ -88,22 +88,22 @@ public class UserRepository implements IUserRepository{
     @Override
     public User addFollower(int userId, int userIdToFollow) {
 
-        if(userId == userIdToFollow)
+        if (userId == userIdToFollow)
             throw new BadRequestException("User with id " + userId + " cannot follow himself");
 
-        User user = this.users.stream().filter(u -> u.getUserId() == userId).findFirst().orElse(null);
-        User userToFollow = this.users.stream().filter(u -> u.getUserId() == userIdToFollow).findFirst().orElse(null);
+        User user = this.users.stream().filter(u -> u.getUserId() == userId).findFirst().orElseThrow(() -> new BadRequestException("User with id " + userId + " not found"));
+        User userToFollow = this.users.stream().filter(u -> u.getUserId() == userIdToFollow).findFirst().orElseThrow(() -> new BadRequestException("User with id " + userIdToFollow + " not found"));
 
-        if(user.getFollowed().stream().filter(u -> u.getUserId() == userIdToFollow).findFirst().orElse(null) != null)
+        if (user.getFollowed().stream().filter(u -> u.getUserId() == userIdToFollow).findFirst().orElse(null) != null)
             throw new BadRequestException("User with id " + userIdToFollow + " already followed");
 
-        if (user != null && userToFollow != null) {
-            user.getFollowed().add(userToFollow);
-            userToFollow.getFollowers().add(user);
-            return user;
-        }
 
-        throw new BadRequestException("User with id " + userId + " not found");
+        user.getFollowed().add(userToFollow);
+
+        userToFollow.getFollowers().add(user);
+
+        return user;
+
     }
 
     @Override
