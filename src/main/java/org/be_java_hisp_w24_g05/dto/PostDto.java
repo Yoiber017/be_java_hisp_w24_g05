@@ -21,7 +21,7 @@ public record PostDto(
         @NotNull(message = "El campo category no puede estar vacío.")
         Integer category,
         @NotNull(message = "El campo price no puede estar vacío.")
-        @DecimalMax(value = "10000000", message = "El precio máximo por producto es de 10.000.000")
+        @DecimalMax(value = "10000000.0", message = "El precio máximo por producto es de 10.000.000")
         Double price
 ) {
 }
