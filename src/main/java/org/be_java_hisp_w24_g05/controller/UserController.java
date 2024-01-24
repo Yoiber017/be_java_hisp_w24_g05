@@ -30,7 +30,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/{userId}/follow/{userIdToFollow}")
+    @PostMapping("/{userId}/follow/{userIdToFollow}")
     public ResponseEntity<UserFollowedDto> followUser(@PathVariable int userId, @PathVariable int userIdToFollow){
 
         UserFollowedDto user = this.userService.followUser(userId, userIdToFollow);
@@ -38,7 +38,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/{userId}/unfollow/{userIdToUnfollow}")
+    @PostMapping("/{userId}/unfollow/{userIdToUnfollow}")
     public ResponseEntity<UserFollowedDto> unfollowUser(@PathVariable int userId, @PathVariable int userIdToUnfollow){
 
         UserFollowedDto user = this.userService.unfollowUser(userId, userIdToUnfollow);
