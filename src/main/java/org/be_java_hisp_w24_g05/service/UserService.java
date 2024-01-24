@@ -4,6 +4,7 @@ import org.be_java_hisp_w24_g05.common.ModelMapper;
 import org.be_java_hisp_w24_g05.dto.CountFollowersDto;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.BadOrderException;
+import org.be_java_hisp_w24_g05.exception.BadRequestException;
 import org.be_java_hisp_w24_g05.exception.NotFoundException;
 
 import org.be_java_hisp_w24_g05.dto.*;
@@ -84,7 +85,7 @@ public class UserService implements IUserService {
             followedList.sort(Comparator.comparing(User::getUserName));
         }else if(order.equals("name_desc")){
             followedList.sort(Comparator.comparing(User::getUserName).reversed());
-        }
+        } else throw new BadRequestException(order + " parameter is not valid");
 
         return Collections.singletonList(modelMapper.convertUserFollowedToDto(user, followedList.stream()
                 .map(modelMapper::convertUserToDto)

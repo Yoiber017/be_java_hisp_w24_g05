@@ -1,11 +1,13 @@
 package org.be_java_hisp_w24_g05.controller;
 
+import jakarta.validation.Valid;
 import org.be_java_hisp_w24_g05.dto.CountFollowersDto;
 import org.be_java_hisp_w24_g05.dto.UserFollowedDto;
 import org.be_java_hisp_w24_g05.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +26,8 @@ public class UserController {
 
         return new ResponseEntity<>(userService.searchUserFollowers(userId,order), HttpStatus.OK);
     }
-    @GetMapping("/{userId}/followed/list")
-    public ResponseEntity<?> getSellerFollowedByUser(@PathVariable Integer userId, @RequestParam(defaultValue = "") String order) {
+    @GetMapping(value = "/{userId}/followed/list", params = "order")
+    public ResponseEntity<?> getSellerFollowedByUser(@PathVariable Integer userId, @RequestParam(defaultValue = "")  String order) {
         return new ResponseEntity<>(userService.getSellerFollowedByUser(userId, order), HttpStatus.OK);
 
     }
