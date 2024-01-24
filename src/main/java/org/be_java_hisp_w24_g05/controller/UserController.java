@@ -1,6 +1,8 @@
 package org.be_java_hisp_w24_g05.controller;
 
+
 import jakarta.validation.constraints.Min;
+import jakarta.validation.Valid;
 import org.be_java_hisp_w24_g05.dto.CountFollowersDto;
 import org.be_java_hisp_w24_g05.dto.UserFollowedDto;
 import org.be_java_hisp_w24_g05.service.IUserService;
@@ -27,6 +29,7 @@ public class UserController {
 
         return new ResponseEntity<>(userService.searchUserFollowers(userId,order), HttpStatus.OK);
     }
+
     @GetMapping("/{userId}/followed/list")
     public ResponseEntity<?> getSellerFollowedByUser(@PathVariable @Min(value = 1, message = "UserId tiene que ser mayor a cero") Integer userId, @RequestParam(defaultValue = "") String order) {
         return new ResponseEntity<>(userService.getSellerFollowedByUser(userId, order), HttpStatus.OK);
