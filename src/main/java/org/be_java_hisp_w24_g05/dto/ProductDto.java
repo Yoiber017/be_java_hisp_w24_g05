@@ -8,6 +8,6 @@ public record ProductDto(
         String type,
         String brand,
         String color,
-        String note
+        String notes
 ) {
 }

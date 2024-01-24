@@ -19,5 +19,5 @@ public class Product {
 
     private String color;
 
-    private String note;
+    private String notes;
 }
