@@ -3,6 +3,7 @@ package org.be_java_hisp_w24_g05.service;
 import org.be_java_hisp_w24_g05.common.ModelMapper;
 import org.be_java_hisp_w24_g05.dto.CountFollowersDto;
 import org.be_java_hisp_w24_g05.entity.User;
+import org.be_java_hisp_w24_g05.exception.BadOrderException;
 import org.be_java_hisp_w24_g05.exception.NotFoundException;
 
 import org.be_java_hisp_w24_g05.dto.*;
@@ -66,7 +67,7 @@ public class UserService implements IUserService {
             users.sort(Comparator.comparing(User::getUserName).reversed());
         }
         else{
-            throw new NotFoundException("Order isn't valid, please use name_asc or name_desc.");
+            throw new BadOrderException("Order isn't valid, please use name_asc or name_desc.");
         }
 
         return Collections.singletonList(modelMapper.convertUserFollowersToDto(user, users.stream()
