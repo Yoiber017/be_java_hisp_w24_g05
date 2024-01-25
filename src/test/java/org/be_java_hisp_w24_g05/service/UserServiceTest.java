@@ -2,6 +2,7 @@ package org.be_java_hisp_w24_g05.service;
 
 
 import org.be_java_hisp_w24_g05.common.Data;
+import org.be_java_hisp_w24_g05.dto.PostFollowedDto;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.Product;
 import org.be_java_hisp_w24_g05.entity.User;
@@ -49,9 +50,12 @@ public class UserServiceTest {
 
         Mockito.when(userRepository.recentPostsOfFollowedUsers(1, "date_desc")).thenReturn(expectedPosts);
 
+        PostFollowedDto expectedPostFollowedDto = new PostFollowedDto(1,expectedPosts);
+
         var result = userService.recentPostsOfFollowedUsers(1, "");
 
         //assert
 
-        Assertions.assertEquals(expectedPosts, result);    }
+        Assertions.assertEquals(expectedPostFollowedDto.getPosts(), result.getPosts());
+    }
 }

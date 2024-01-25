@@ -37,13 +37,14 @@ public class UserService implements IUserService {
 
     // Posts of followed users by user id from last 2 weeks sorted by date
     //in case none found throw not found exception
-    public List<Post> recentPostsOfFollowedUsers(int userId, String order){
+    public PostFollowedDto recentPostsOfFollowedUsers(int userId, String order){
         try {
             if (order.isEmpty()) order = "date_desc";
             if (!order.equalsIgnoreCase("date_asc") && !order.equalsIgnoreCase("date_desc")) {
                 throw new BadRequestException("Order value not valid");
             }
-            return userRepository.recentPostsOfFollowedUsers(userId, order);
+            List<Post> posts = userRepository.recentPostsOfFollowedUsers(userId, order);
+            return new PostFollowedDto(userId, posts);
         }
         catch (NoSuchElementException e) {
             throw new NotFoundException("User not found");
