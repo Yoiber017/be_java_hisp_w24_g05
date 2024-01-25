@@ -26,11 +26,13 @@ public class ExceptionController {
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage());
         return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(BadOrderException.class)
     public ResponseEntity<?> badOrderRequest(BadRequestException e){
         ExceptionDto exceptionDto = new ExceptionDto(e.getMessage());
         return new ResponseEntity<>(exceptionDto, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorDto> validationException(MethodArgumentNotValidException e){
         return ResponseEntity.badRequest().body(
@@ -48,6 +50,7 @@ public class ExceptionController {
                 )
         );
     }
+
 
 
 }
