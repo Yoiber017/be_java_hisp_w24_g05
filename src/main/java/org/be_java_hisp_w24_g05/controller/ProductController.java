@@ -1,5 +1,7 @@
 package org.be_java_hisp_w24_g05.controller;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.be_java_hisp_w24_g05.dto.PostDto;
 import org.be_java_hisp_w24_g05.service.IProductService;
 import org.be_java_hisp_w24_g05.service.IUserService;
@@ -24,12 +26,12 @@ public class ProductController {
     private IUserService userService;
 
     @GetMapping("/followed/{userId}/list")
-    public ResponseEntity<?> recentPostsOfFollowedUsers(@PathVariable int userId,@RequestParam(name = "order", defaultValue = "") String order){
+    public ResponseEntity<?> recentPostsOfFollowedUsers(@PathVariable @Min(value = 1, message = "UserId tiene que ser mayor a cero") Integer userId, @RequestParam(name = "order", defaultValue = "") String order){
         return ResponseEntity.ok(userService.recentPostsOfFollowedUsers(userId,order));
     }
 
     @PostMapping("/post")
-    public ResponseEntity<?> makePost(@RequestBody PostDto p){
+    public ResponseEntity<?> makePost(@RequestBody @Valid PostDto p){
         return new ResponseEntity<>(productService.makePost(p), HttpStatus.OK);
     }
 }
