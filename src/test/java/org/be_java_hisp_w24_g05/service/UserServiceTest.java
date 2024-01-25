@@ -6,6 +6,11 @@ import org.be_java_hisp_w24_g05.dto.UserDto;
 import org.be_java_hisp_w24_g05.dto.UserFollowedByDto;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.BadRequestException;
+
+import org.be_java_hisp_w24_g05.dto.UserFollowersDto;
+
+import org.be_java_hisp_w24_g05.exception.BadOrderException;
+
 import org.be_java_hisp_w24_g05.repository.IUserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -125,4 +130,96 @@ public class UserServiceTest {
     }
 
 
+    @Test
+    @DisplayName("T-0003 Verify an exception thrown when order is different to name_asc or name_des")
+    public void searchUserFollowersExceptionTest(){
+
+        // Arrange
+        int userId = 1;
+        String order = "name_des";
+        User user = data.loadData().get(0);
+
+        // Act
+        Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        // Assert
+        Assertions.assertThrows(
+                BadOrderException.class,
+                ()->{
+                    userService.searchUserFollowers(userId, order);
+                }
+        );
+
+    }
+
+    @Test
+    @DisplayName("T-0003 T-0004 Verify name_asc works as expected in searchUserFollowers")
+    public void searchUserFollowersOrderByNameAscTest(){
+        // Arrange
+        int userId = 1;
+        String order = "name_asc";
+        User user = data.loadData().get(0);
+
+        List<UserFollowersDto> expected = Collections.singletonList(
+                                                        new UserFollowersDto(1,
+                                                                            "User1",
+                                                                            List.of(
+                                                                                new UserDto(2, "User2"),
+                                                                                new UserDto(3, "User3"),
+                                                                                new UserDto(4, "User4"))));
+        // Act
+        Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        // Assert
+        Assertions.assertEquals(expected, userService.searchUserFollowers(userId, order),"The order by name_asc is not working as expected");
+
+    }
+    @Test
+    @DisplayName("T-0003 T-0004 Verify name_desc works as expected in searchUserFollowers")
+    public void searchUserFollowersOrderByNameDescTest(){
+
+        // Arrange
+        int userId = 1;
+        String order = "name_desc";
+        User user = data.loadData().get(0);
+
+        List<UserFollowersDto> expected = Collections.singletonList(
+                new UserFollowersDto(1,
+                        "User1",
+                        List.of(
+                                new UserDto(4, "User4"),
+                                new UserDto(3, "User3"),
+                                new UserDto(2, "User2"))));
+        // Act
+        Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        // Assert
+        Assertions.assertEquals(expected, userService.searchUserFollowers(userId, order),"The order by name_desc is not working as expected");
+
+    }
+
+
+    @Test
+    @DisplayName("T-0003 T-0004 Verify searchUserFollowers works as expected")
+    public void searchUserFollowersTest(){
+
+        // Arrange
+        int userId = 1;
+        String order = "";
+        User user = data.loadData().get(0);
+
+        List<UserFollowersDto> expected = Collections.singletonList(
+                new UserFollowersDto(1,
+                        "User1",
+                        List.of(
+                                new UserDto(2, "User2"),
+                                new UserDto(3, "User3"),
+                                new UserDto(4, "User4"))));
+        // Act
+        Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+
+        // Assert
+        Assertions.assertEquals(expected, userService.searchUserFollowers(userId, order),"The method searchUserFollowers is not working as expected");
+
+    }
 }
