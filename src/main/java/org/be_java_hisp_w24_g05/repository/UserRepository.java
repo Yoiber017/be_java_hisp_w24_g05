@@ -9,6 +9,7 @@ import org.be_java_hisp_w24_g05.entity.Product;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.BadRequestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -25,9 +26,10 @@ import java.util.Optional;
 @Repository
 public class UserRepository implements IUserRepository{
 
+
     private ArrayList<User> users;
     public UserRepository() {
-        users = loadData();
+        users = Data.loadData();
     }
     @Override
     public User save(User user) {
