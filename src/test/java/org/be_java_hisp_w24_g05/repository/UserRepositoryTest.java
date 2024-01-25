@@ -30,47 +30,35 @@ public class UserRepositoryTest {
 
         Assertions.assertEquals(expected, result);
     }
+
     @Test
-    public void recentPostsOfFollowedUsersDateDescPositive(){
+    public void recentPostsOfFollowedUsersDateDescPositive() {
         //arrange
 
         List<Post> expectedPosts = List.of(data.getPOSTS().get(0), data.getPOSTS().get(4), data.getPOSTS().get(1));
 
         //act
 
-        var result = userRepository.recentPostsOfFollowedUsers(1,"date_desc");
+        var result = userRepository.recentPostsOfFollowedUsers(1, "date_desc");
 
         //assert
 
-        Assertions.assertEquals(expectedPosts,result);
+        Assertions.assertEquals(expectedPosts, result);
     }
 
     @Test
-    public void recentPostsOfFollowedUsersDateAscPositive(){
+    public void recentPostsOfFollowedUsersDateAscPositive() {
         //arrange
 
-        Product product = new Product(4, "Laptop", "Electronics", "BrandX", "Silver", "Note1");
-        Product product1 = new Product(1, "Laptop", "Electronics", "BrandX", "Silver", "Note1");
-        Product product2 = new Product(2, "Phone", "Electronics", "BrandY", "Black", "Note2");
-        Product product3 = new Product(3, "Camera", "Photography", "BrandZ", "Red", "Note3");
-
-        //Lista de posts esperados de con fecha menor a 14 dias
-        Post post1 = new Post(1, 1, LocalDate.now().minusDays(7), product1, 1, 100.0);
-        Post post2 = new Post(2, 1, LocalDate.now().minusDays(14), product2, 2, 200.0);
-        Post post3 = new Post(3, 2, LocalDate.now().minusDays(21), product3, 1, 150.0);
-        Post post4 = new Post(4, 2, LocalDate.now().minusDays(3), product1, 2, 120.0);
-
-        List<Post> expectedPosts = List.of(post4, post1, post2);
+        List<Post> expectedPosts = List.of(data.getPOSTS().get(1), data.getPOSTS().get(4), data.getPOSTS().get(0));
 
         //act
 
-
-        var result = userRepository.recentPostsOfFollowedUsers(1,"date_asc");
-
-        //quizas mejor comparo con lo que me da el repositorio?
+        var result = userRepository.recentPostsOfFollowedUsers(1, "date_asc");
 
         //assert
 
-        Assertions.assertEquals(result, expectedPosts);
+        Assertions.assertEquals(expectedPosts, result);
+
     }
 }

@@ -5,6 +5,7 @@ import org.be_java_hisp_w24_g05.common.Data;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.Product;
 import org.be_java_hisp_w24_g05.entity.User;
+import org.be_java_hisp_w24_g05.exception.BadRequestException;
 import org.be_java_hisp_w24_g05.repository.IUserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,63 +31,27 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void recentPostsOfFollowedUsersDateDescPositive(){
-        //arrange
+    public void recentPostsOfFollowedUsersOrderIncorrect(){
 
-        Product product = new Product(4, "Laptop", "Electronics", "BrandX", "Silver", "Note1");
-        Product product1 = new Product(1, "Laptop", "Electronics", "BrandX", "Silver", "Note1");
-        Product product2 = new Product(2, "Phone", "Electronics", "BrandY", "Black", "Note2");
-        Product product3 = new Product(3, "Camera", "Photography", "BrandZ", "Red", "Note3");
-
-        //Lista de posts esperados de con fecha menor a 14 dias
-        Post post1 = new Post(1, 1, LocalDate.now().minusDays(7), product1, 1, 100.0);
-        Post post2 = new Post(2, 1, LocalDate.now().minusDays(14), product2, 2, 200.0);
-        Post post3 = new Post(3, 2, LocalDate.now().minusDays(21), product3, 1, 150.0);
-        Post post4 = new Post(4, 2, LocalDate.now().minusDays(3), product1, 2, 120.0);
-
-        List<Post> expectedPosts = List.of(post2, post1, post4);
-
-         //act
-
-        
-
-        //Mockito.when(userRepository.recentPostsOfFollowedUsers(1,"date_desc")).thenReturn(expectedPosts);
-
-        var result = userRepository.recentPostsOfFollowedUsers(1,"date_desc");
-
-        //assert
-
-        Assertions.assertEquals(expectedPosts,result);
+        Assertions.assertThrows(BadRequestException.class, ()-> userService.recentPostsOfFollowedUsers(1,"patata"));
     }
 
+
+    //si order esta vacio deberia ser descendente por defecto
+    //osea seria lo mismo que el caso desc pero con un order vacio
     @Test
-    public void recentPostsOfFollowedUsersDateAscPositive(){
+    public void  recentPostsOfFollowedUsersNullOrder(){
         //arrange
 
-        Product product = new Product(4, "Laptop", "Electronics", "BrandX", "Silver", "Note1");
-        Product product1 = new Product(1, "Laptop", "Electronics", "BrandX", "Silver", "Note1");
-        Product product2 = new Product(2, "Phone", "Electronics", "BrandY", "Black", "Note2");
-        Product product3 = new Product(3, "Camera", "Photography", "BrandZ", "Red", "Note3");
-
-        //Lista de posts esperados de con fecha menor a 14 dias
-        Post post1 = new Post(1, 1, LocalDate.now().minusDays(7), product1, 1, 100.0);
-        Post post2 = new Post(2, 1, LocalDate.now().minusDays(14), product2, 2, 200.0);
-        Post post3 = new Post(3, 2, LocalDate.now().minusDays(21), product3, 1, 150.0);
-        Post post4 = new Post(4, 2, LocalDate.now().minusDays(3), product1, 2, 120.0);
-
-        List<Post> expectedPosts = List.of(post4, post1, post2);
+        List<Post> expectedPosts = List.of(data.getPOSTS().get(0), data.getPOSTS().get(4), data.getPOSTS().get(1));
 
         //act
 
-        Mockito.when(userRepository.recentPostsOfFollowedUsers(1,"date_asc")).thenReturn(expectedPosts);
+        Mockito.when(userRepository.recentPostsOfFollowedUsers(1, "date_desc")).thenReturn(expectedPosts);
 
-        var result = userService.recentPostsOfFollowedUsers(1,"date_asc");
-
-        //quizas mejor comparo con lo que me da el repositorio?
+        var result = userService.recentPostsOfFollowedUsers(1, "");
 
         //assert
 
-        Assertions.assertEquals(result, expectedPosts);
-    }
-
+        Assertions.assertEquals(expectedPosts, result);    }
 }

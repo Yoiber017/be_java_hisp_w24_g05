@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,10 +39,17 @@ public class UserService implements IUserService {
     //in case none found throw not found exception
     public List<Post> recentPostsOfFollowedUsers(int userId, String order){
         try {
+            if (order.isEmpty()) order = "date_desc";
+            if (!order.equalsIgnoreCase("date_asc") && !order.equalsIgnoreCase("date_desc")) {
+                throw new BadRequestException("Order value not valid");
+            }
             return userRepository.recentPostsOfFollowedUsers(userId, order);
         }
-        catch (Exception e) {
+        catch (NoSuchElementException e) {
             throw new NotFoundException("User not found");
+        }
+        catch (BadRequestException e) {
+            throw new BadRequestException("Order value not valid");
         }
     }
 

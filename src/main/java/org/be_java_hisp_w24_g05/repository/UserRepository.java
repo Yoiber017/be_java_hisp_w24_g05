@@ -65,13 +65,12 @@ public class UserRepository implements IUserRepository{
                 .sorted(Comparator.comparing(Post::getDate))
                 .toList();
 
-        if (order.equals("date_desc")){
+        if (order.equals("date_desc") || order.isEmpty()) {
             return lisPosts.stream().sorted(Comparator.comparing(Post::getDate).reversed()).toList();
         }
         else {
             return lisPosts;
         }
-
     }
 
     @Override
