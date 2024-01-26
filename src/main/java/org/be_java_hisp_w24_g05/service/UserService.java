@@ -13,11 +13,8 @@ import org.be_java_hisp_w24_g05.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -88,7 +85,7 @@ public class UserService implements IUserService {
     @Override
     public List<UserFollowersDto> searchUserFollowers(Integer userId, String order) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
-        List<User> users= user.getFollowers();
+        List<User> users= new ArrayList<>(user.getFollowers());
         if (users.isEmpty()) throw new NotFoundException("User ID: " + userId + " doesn't have any followers.");
         if(order.equals("name_asc")  || order.equals("")){
             users.sort(Comparator.comparing(User::getUserName));
@@ -99,7 +96,7 @@ public class UserService implements IUserService {
             throw new BadOrderException("Order isn't valid, please use name_asc or name_desc.");
         }
 
-        return Collections.singletonList(modelMapper.convertUserFollowersToDto(user, users.stream()
+        return Arrays.asList(modelMapper.convertUserFollowersToDto(user, users.stream()
                 .map(modelMapper::convertUserToDto)
                 .collect(Collectors.toList())));
 

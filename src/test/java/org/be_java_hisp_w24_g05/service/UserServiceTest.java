@@ -58,7 +58,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
-    private Data data = new Data();
+    private  Data data = new Data();
     @Mock
     private IUserRepository userRepository;
 
@@ -67,7 +67,6 @@ public class UserServiceTest {
 
     @Test
     @DisplayName("[T-0005] Verify exception in case of incorrect order")
-
     public void recentPostsOfFollowedUsersOrderIncorrect(){
 
         Assertions.assertThrows(BadRequestException.class, ()-> userService.recentPostsOfFollowedUsers(1,"patata"));
@@ -191,7 +190,7 @@ public class UserServiceTest {
 
 
     @Test
-    @DisplayName("[T-0003] Verify an exception thrown when order is different to name_asc or name_des")
+   @DisplayName("[T-0003] Verify an exception thrown when order is different to name_asc or name_desc")
     public void searchUserFollowersExceptionTest(){
 
         // Arrange
