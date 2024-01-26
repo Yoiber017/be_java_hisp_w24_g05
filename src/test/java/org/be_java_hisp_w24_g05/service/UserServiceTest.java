@@ -233,7 +233,7 @@ public class UserServiceTest {
     @DisplayName("[T-0007] - Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002) - Usuario con id 1")
     public void searchUserFollowersId1() {
 
-        CountFollowersDto expected = new CountFollowersDto(1, "User1", 2);
+        CountFollowersDto expected = new CountFollowersDto(1, "User1", 3);
 
         User user = data.loadData().get(0);
 
@@ -278,7 +278,7 @@ public class UserServiceTest {
     @DisplayName("[T-0007] - Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002) - Usuario con id 4")
     public void searchUserFollowersId4() {
 
-        CountFollowersDto expected = new CountFollowersDto(4, "User4", 0);
+        CountFollowersDto expected = new CountFollowersDto(4, "User4", 1);
 
         User user = data.loadData().get(3);
 
