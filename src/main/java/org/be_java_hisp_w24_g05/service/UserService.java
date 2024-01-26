@@ -100,7 +100,7 @@ public class UserService implements IUserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("User not found"));
         List<User> followedList = user.getFollowed();
         if (followedList.isEmpty()) throw new NotFoundException("User ID: " + userId + " doesn't follow any seller.");
-        if(order.equals("name_asc")){
+        if(order.equals("name_asc") || order.isEmpty()){
             followedList.sort(Comparator.comparing(User::getUserName));
         }else if(order.equals("name_desc")){
             followedList.sort(Comparator.comparing(User::getUserName).reversed());
