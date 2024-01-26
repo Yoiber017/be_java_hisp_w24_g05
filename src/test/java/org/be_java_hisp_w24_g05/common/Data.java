@@ -1,5 +1,7 @@
 package org.be_java_hisp_w24_g05.common;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.Product;
 import org.be_java_hisp_w24_g05.entity.User;
@@ -9,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+@Getter
+@Setter
 public class Data {
 
     private final List<Product> PRODUCTS = Arrays.asList(

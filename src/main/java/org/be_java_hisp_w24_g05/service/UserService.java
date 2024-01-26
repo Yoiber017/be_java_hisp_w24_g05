@@ -48,14 +48,33 @@ public class UserService implements IUserService {
 
     @Override
     public UserFollowedDto followUser(int userId, int userIdToFollow) {
-        User user = this.userRepository.addFollower(userId, userIdToFollow);
-        return modelMapper.userToUserFollowedDTO(user);
+        if (userId == userIdToFollow)
+            throw new BadRequestException("User with id " + userId + " cannot follow himself");
+
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new BadRequestException("User with id " + userId + " not found"));
+        User userToFollow = this.userRepository.findById(userIdToFollow).orElseThrow(() -> new BadRequestException("User with id " + userIdToFollow + " not found"));
+
+        if (user.getFollowed().stream().filter(u -> u.getUserId() == userIdToFollow).findFirst().orElse(null) != null)
+            throw new BadRequestException("User with id " + userIdToFollow + " already followed");
+
+        User userTodDto = this.userRepository.addFollower(user, userToFollow);
+
+        return modelMapper.userToUserFollowedDTO(userTodDto);
     }
 
     @Override
     public UserFollowedDto unfollowUser(int userId, int userIdToUnfollow) {
-        User user = this.userRepository.removeFollower(userId, userIdToUnfollow);
-        return modelMapper.userToUserFollowedDTO(user);
+        if (userId == userIdToUnfollow)
+            throw new BadRequestException("User with id " + userId + " cannot unfollow himself");
+
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new BadRequestException("User with id " + userId + " not found"));
+
+        if (user.getFollowed().stream().filter(u -> u.getUserId() == userIdToUnfollow).findFirst().orElse(null) == null)
+            throw new BadRequestException("User with id " + userIdToUnfollow + " not followed");
+
+        User userToDto = this.userRepository.removeFollower(user, userIdToUnfollow);
+
+        return modelMapper.userToUserFollowedDTO(userToDto);
     }
     @Override
     public List<UserFollowersDto> searchUserFollowers(Integer userId, String order) {
