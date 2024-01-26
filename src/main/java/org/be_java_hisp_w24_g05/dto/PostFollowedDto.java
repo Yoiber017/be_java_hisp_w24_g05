@@ -1,28 +1,22 @@
-package org.be_java_hisp_w24_g05.entity;
+package org.be_java_hisp_w24_g05.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.be_java_hisp_w24_g05.entity.Post;
 
 import java.util.List;
 
-
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@Getter
+public class PostFollowedDto {
+
 
     @JsonProperty("user_id")
     private Integer userId;
-
-    @JsonProperty("user_name")
-    private String userName;
-
-    private List<User> followers;
-
-    private List<User> followed;
-
     private List<Post> posts;
+
 
 }

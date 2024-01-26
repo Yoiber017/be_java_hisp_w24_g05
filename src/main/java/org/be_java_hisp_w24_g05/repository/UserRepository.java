@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.be_java_hisp_w24_g05.entity.Post;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.BadRequestException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ResourceUtils;
 
@@ -23,23 +24,10 @@ import java.util.Optional;
 @Repository
 public class UserRepository implements IUserRepository{
 
+
     private ArrayList<User> users;
     public UserRepository() {
-        users = loadData();
-    }
-    @Override
-    public User save(User user) {
-        return null;
-    }
-
-    @Override
-    public User update(User user) {
-        return null;
-    }
-
-    @Override
-    public Boolean deleteById(Integer id) {
-        return null;
+        users = Data.loadData();
     }
 
     @Override
@@ -48,7 +36,7 @@ public class UserRepository implements IUserRepository{
     }
     @Override
     public ArrayList<User> findAll() {
-        return null;
+        return users;
     }
 
     // Posts of followed users by user id from last 2 weeks sorted by date
@@ -61,13 +49,12 @@ public class UserRepository implements IUserRepository{
                 .sorted(Comparator.comparing(Post::getDate))
                 .toList();
 
-        if (order.equals("date_desc")){
+        if (order.equals("date_desc") || order.isEmpty()) {
             return lisPosts.stream().sorted(Comparator.comparing(Post::getDate).reversed()).toList();
         }
         else {
             return lisPosts;
         }
-
     }
 
     @Override
@@ -106,20 +93,4 @@ public class UserRepository implements IUserRepository{
         return user;
     }
 
-    private ArrayList<User> loadData() {
-        ArrayList<User> data = new ArrayList<>();
-        File file;
-        ObjectMapper objectMapper = new ObjectMapper()
-                .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
-                .registerModule(new JavaTimeModule());
-
-        TypeReference<ArrayList<User>> typeRef = new TypeReference<>() {};
-        try {
-            file = ResourceUtils.getFile("classpath:json/user.json");
-            data = objectMapper.readValue(file, typeRef);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
 }

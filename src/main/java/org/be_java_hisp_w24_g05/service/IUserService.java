@@ -18,7 +18,7 @@ public interface IUserService {
 
     List<UserFollowedByDto> getSellerFollowedByUser(Integer userId, String order);
 
-    List<Post> recentPostsOfFollowedUsers(int userId, String order);
+    PostFollowedDto recentPostsOfFollowedUsers(int userId, String order);
 
     UserFollowedDto followUser(int userId, int userIdToFollow);
 

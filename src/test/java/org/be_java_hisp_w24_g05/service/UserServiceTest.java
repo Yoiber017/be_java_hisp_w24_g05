@@ -2,6 +2,12 @@ package org.be_java_hisp_w24_g05.service;
 
 
 import org.be_java_hisp_w24_g05.common.Data;
+import org.be_java_hisp_w24_g05.dto.PostFollowedDto;
+import org.be_java_hisp_w24_g05.entity.Post;
+import org.be_java_hisp_w24_g05.entity.Product;
+import org.be_java_hisp_w24_g05.entity.User;
+import org.be_java_hisp_w24_g05.exception.BadRequestException;
+import org.be_java_hisp_w24_g05.common.Data;
 import org.be_java_hisp_w24_g05.dto.CountFollowersDto;
 import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.NotFoundException;
@@ -21,6 +27,8 @@ import org.be_java_hisp_w24_g05.entity.User;
 import org.be_java_hisp_w24_g05.exception.BadRequestException;
 import org.be_java_hisp_w24_g05.repository.IUserRepository;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +36,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.Optional;
 
@@ -45,16 +58,45 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
+    private Data data = new Data();
     @Mock
     private IUserRepository userRepository;
 
     @InjectMocks
     private UserService userService;
 
-    private final Data data = new Data();
+    @Test
+    @DisplayName("[T-0005] Verify exception in case of incorrect order")
+
+    public void recentPostsOfFollowedUsersOrderIncorrect(){
+
+        Assertions.assertThrows(BadRequestException.class, ()-> userService.recentPostsOfFollowedUsers(1,"patata"));
+    }
+
+
 
     @Test
-    @DisplayName("Verify correct order")
+    @DisplayName("[T-0006] Verify correct order date_desc in case of null order")
+    public void  recentPostsOfFollowedUsersNullOrder(){
+        //arrange
+
+        List<Post> expectedPosts = List.of(data.getPOSTS().get(0), data.getPOSTS().get(4), data.getPOSTS().get(1));
+
+        //act
+
+        Mockito.when(userRepository.recentPostsOfFollowedUsers(1, "date_desc")).thenReturn(expectedPosts);
+
+        PostFollowedDto expectedPostFollowedDto = new PostFollowedDto(1,expectedPosts);
+
+        var result = userService.recentPostsOfFollowedUsers(1, "");
+
+        //assert
+
+        Assertions.assertEquals(expectedPostFollowedDto.getPosts(), result.getPosts());
+    }
+
+    @Test
+    @DisplayName("[T-0003] Verify correct order")
     public void getSellerFollowedByUserTest(){
 
         // Arrange
@@ -77,7 +119,7 @@ public class UserServiceTest {
 
     }
     @Test
-    @DisplayName("Verify correct order asc")
+    @DisplayName("[T-0003] Verify correct order asc")
     public void getSellerFollowedByUserNameAscTest(){
 
         // Arrange
@@ -101,7 +143,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Verify correct order desc")
+    @DisplayName("[T-0003] Verify correct order desc")
     public void getSellerFollowedByUserNameDescTest(){
 
         // Arrange
@@ -126,7 +168,7 @@ public class UserServiceTest {
 
 
     @Test
-    @DisplayName("Verify name_asc and name_desc exist")
+    @DisplayName("[T-0003] Verify name_asc and name_desc exist")
     public void getSellerFollowedByUserOrderTest(){
 
         // Arrange
@@ -149,7 +191,7 @@ public class UserServiceTest {
 
 
     @Test
-    @DisplayName("T-0003 Verify an exception thrown when order is different to name_asc or name_des")
+    @DisplayName("[T-0003] Verify an exception thrown when order is different to name_asc or name_des")
     public void searchUserFollowersExceptionTest(){
 
         // Arrange
@@ -171,7 +213,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("T-0003 T-0004 Verify name_asc works as expected in searchUserFollowers")
+    @DisplayName("[T-0003] [T-0004] Verify name_asc works as expected in searchUserFollowers")
     public void searchUserFollowersOrderByNameAscTest(){
         // Arrange
         int userId = 1;
@@ -193,7 +235,7 @@ public class UserServiceTest {
 
     }
     @Test
-    @DisplayName("T-0003 T-0004 Verify name_desc works as expected in searchUserFollowers")
+    @DisplayName("[T-0003] [T-0004] Verify name_desc works as expected in searchUserFollowers")
     public void searchUserFollowersOrderByNameDescTest(){
 
         // Arrange
@@ -218,7 +260,7 @@ public class UserServiceTest {
 
 
     @Test
-    @DisplayName("T-0003 T-0004 Verify searchUserFollowers works as expected")
+    @DisplayName("[T-0003] [T-0004] Verify searchUserFollowers works as expected")
     public void searchUserFollowersTest(){
 
         // Arrange
@@ -310,7 +352,7 @@ public class UserServiceTest {
 
 
     @Test
-    @DisplayName("[US01] - Test of verify id user to follow exists")
+    @DisplayName("[T-0001] - Test of verify id user to follow exists")
     public void followUserTest() {
 
         UserFollowedDto expected = new UserFollowedDto(2, "User2", 1);
@@ -329,7 +371,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("[US01] - Test of verify id user to follow don't exists")
+    @DisplayName("[T-0001] - Test of verify id user to follow don't exists")
     public void followUserNoExist(){
         when(userRepository.findById(1)).thenReturn(Optional.ofNullable(data.loadData().get(1)));
         when(userRepository.findById(2)).thenReturn(Optional.empty());
@@ -340,7 +382,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("[US07] - Test of verify user to unfollow exists")
+    @DisplayName("[T-0002] - Test of verify user to unfollow exists")
     public void unfollowUserTest() {
 
         UserFollowedDto expected = new UserFollowedDto(1, "User1", 1);
@@ -357,7 +399,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("[US07] -Test of verify user to unfollow don't exists")
+    @DisplayName("[T-0002] -Test of verify user to unfollow don't exists")
     public void unfollowUserNoExist(){
         when(userRepository.findById(1)).thenReturn(Optional.empty());
 
