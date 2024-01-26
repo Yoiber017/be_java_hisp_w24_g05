@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import org.springframework.format.annotation.DateTimeFormat;
