@@ -24,9 +24,7 @@ public class UserRepositoryTest {
     public void loadData() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         List<User> expected = data.loadData();
 
-        Method method = userRepository.getClass().getDeclaredMethod("loadData");
-        method.setAccessible(true);
-        List<User> result = (List<User>) method.invoke(userRepository);
+        List<User> result = userRepository.findAll();
 
         Assertions.assertEquals(expected, result);
     }
