@@ -35,6 +35,7 @@ public class Data {
 
     private final List<User> FOLLOWERS_BY_USER_1 = Arrays.asList(
             new User(2, "User2", new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
+            new User(4, "User4", new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
             new User(3, "User3", new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
     );
 
@@ -42,11 +43,13 @@ public class Data {
             new User(2, "User2", new ArrayList<>(), new ArrayList<>(), new ArrayList<>()),
             new User(3, "User3", new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
     );
-
+    private final List<User> FOLLOWERS_BY_USER_4 = Arrays.asList(
+            new User(1, "User1", new ArrayList<>(), new ArrayList<>(), new ArrayList<>())
+    );
     private final User USER_1 = new User(1, "User1", FOLLOWERS_BY_USER_1, FOLLOWED_BY_USER_1, Arrays.asList(POSTS.get(0), POSTS.get(1)));
     private final User USER_2 = new User(2, "User2", new ArrayList<>(), new ArrayList<>(), Arrays.asList(POSTS.get(2), POSTS.get(3)));
     private final User USER_3 = new User(3, "User3", new ArrayList<>(), new ArrayList<>(), Arrays.asList(POSTS.get(4), POSTS.get(5)));
-    private final User USER_4 = new User(4, "User4", new ArrayList<>(), FOLLOWED_BY_USER_4, Arrays.asList(POSTS.get(6), POSTS.get(7)));
+    private final User USER_4 = new User(4, "User4", FOLLOWERS_BY_USER_4, FOLLOWED_BY_USER_4, Arrays.asList(POSTS.get(6), POSTS.get(7)));
 
     public List<User> loadData() {
         return Arrays.asList(USER_1, USER_2, USER_3, USER_4);
