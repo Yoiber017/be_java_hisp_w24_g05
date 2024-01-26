@@ -26,7 +26,6 @@ public class UserRepositoryTest {
         List<User> result = (List<User>) method.invoke(userRepository);
 
         Assertions.assertFalse(result.isEmpty());
-        //Assertions.assertEquals(expected, result);
     }
 
     @Test
