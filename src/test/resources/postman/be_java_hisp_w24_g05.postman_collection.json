@@ -141,7 +141,7 @@
 		{
 			"name": "Follow",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
 					"raw": "localhost:8080/users/2/follow/3",
@@ -162,7 +162,7 @@
 		{
 			"name": "Unfollow",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"url": {
 					"raw": "localhost:8080/users/2/unfollow/3",
