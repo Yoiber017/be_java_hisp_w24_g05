@@ -283,7 +283,7 @@ public class UserServiceTest {
 
     }
     @Test
-    @DisplayName("[T-0007] - Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002) - Usuario con id 1")
+    @DisplayName("[T-0007] - Verify that the number of followers of a certain user is correct. (US-0002) - User with id 1")
     public void searchUserFollowersId1() {
 
         CountFollowersDto expected = new CountFollowersDto(1, "User1", 3);
@@ -298,7 +298,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("[T-0007] - Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002) - Usuario con id 2")
+    @DisplayName("[T-0007] - Verify that the number of followers of a certain user is correct. (US-0002) - User with id 2")
     public void searchUserFollowersId2() {
 
         CountFollowersDto expected = new CountFollowersDto(2, "User2", 0);
@@ -313,7 +313,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("[T-0007] - Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002) - Usuario con id 3")
+    @DisplayName("[T-0007] - Verify that the number of followers of a certain user is correct. (US-0002) - User with id 3")
     public void searchUserFollowersId3() {
 
         CountFollowersDto expected = new CountFollowersDto(3, "User3", 0);
@@ -328,7 +328,7 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("[T-0007] - Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002) - Usuario con id 4")
+    @DisplayName("[T-0007] - Verify that the number of followers of a certain user is correct. (US-0002) - User with id 4")
     public void searchUserFollowersId4() {
 
         CountFollowersDto expected = new CountFollowersDto(4, "User4", 1);
@@ -342,7 +342,7 @@ public class UserServiceTest {
         Assertions.assertEquals(expected, result);
     }
     @Test
-    @DisplayName("[T-0007] - Verificar que la cantidad de seguidores de un determinado usuario sea correcta. (US-0002) - Usuario no registrado")
+    @DisplayName("[T-0007] - Verify that the number of followers of a certain user is correct. (US-0002) - User null")
     public void searchUserFollowersNotFound() {
 
         Mockito.when(userRepository.findById(10)).thenReturn(Optional.empty());
