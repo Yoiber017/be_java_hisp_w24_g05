@@ -60,7 +60,7 @@ La API se ejecuta localmente utilizando Spring Boot. Para las pruebas, se puede 
 
 
 ### Testing
-| Situaciones de entrada                                                                               | Comportamiento Esperado  | Responsable                                                             |
+| Situaciones de entrada                                                                               | Comportamiento Esperado  | Responsables                                                             |
 |------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
 | T-0001 Verificar que el usuario a seguir exista. (US-0001)                                          | - Se cumple: Permite continuar con normalidad.                                         | [@storresarias](https://github.com/storresarias)
 |                                                                                                      | - No se cumple: Notifica la no existencia mediante una excepción.    |                  | 
